@@ -1,28 +1,34 @@
 abstract class Type {
-  late int id;
-  late String title;
-  late String author;
-  late int year;
-  late bool isAvailable;
+  int id;
+  String title;
+  String author;
+  int year;
+  bool isAvailable;
   String? dniClient;
 
-  Type.noArguments();
+  //Constructor por defecto
+  Type()
+      : id = 0,
+        title = '',
+        author = '',
+        year = 0,
+        isAvailable = false,
+        dniClient = null
+  ;
 
-  Type.idAndTitle({
-    required this.id,
-    required this.title
-  });
+  // Constructor con id y titulo
+  Type.noDetails(this.id, this.title)
+      : author = '',
+        year = 0,
+        isAvailable = false,
+        dniClient = null
+  ;
 
-  Type.full({
-    required this.id,
-    required this.title,
-    required this.author,
-    required this.year,
-    required this.isAvailable,
-    this.dniClient,
-  }){
-    this.isAvailable = false;
-  }
+  Type.complete(this.id, this.title, this.author, this.year, this.isAvailable, this.dniClient);
+
+  //Getters y Setters
+  // No hace falta crear getters y setters ya que no hay atributos privados
+
 
   @override
   String toString() {
@@ -30,31 +36,23 @@ abstract class Type {
   }
 
   void borrow(String dni){
-    this.isAvailable = true;
-    this.dniClient = dni;
+    isAvailable = true;
+    dniClient = dni;
   }
 
   void giveBack(){
-    this.isAvailable = false;
-    this.dniClient = null;
+    isAvailable = false;
+    dniClient = null;
   }
 
-  String isBorroed(){
-    late String isBorroed;
-    if(this.isAvailable == true){
-      isBorroed = "The item is borrowed by the client with DNI: $dniClient";
-    } else {
-      isBorroed = "The item is available";
-    }
-    return isBorroed;
-  }
+  bool stateBook()=> isAvailable;
 
-  int  compareTo(Type type) {
-    if(this.hashCode == type.hashCode){
-      return 0;
-    } else {
-      return 1;
-    }
-  }
+  // int compareTo(Type other){
+  //   if(this.hashCode == other.hashCode){
+  //     return year.compareTo(other);
+  //   } else{
+  //     return ("Solo se pueden comparar libros con el mismo hashCode").hashCode;
+  // }
 
 }
+
